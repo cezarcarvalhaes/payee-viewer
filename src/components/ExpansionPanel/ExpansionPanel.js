@@ -13,7 +13,7 @@ const styles = theme => ({
     width: '100%',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: theme.typography.pxToRem(12),
     fontWeight: theme.typography.fontWeightRegular,
   },
   column: {
@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-function SimpleExpansionPanel(props) {
+const SimpleExpansionPanel = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
@@ -31,7 +31,6 @@ function SimpleExpansionPanel(props) {
                 <ExpandMoreIcon />
             </Tooltip>
         }>
-          {/* <Typography className={classes.heading}>Expansion Panel 1</Typography> */}
             <div className={classes.column}>
                 <Typography >
                     {props.payor}

@@ -1,28 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import ExpansionPanel from '../ExpansionPanel/ExpansionPanel';
 import PanelHeader from '../PanelHeader';
+import './Modal.css';
 
-
-const styles = theme => ({
-  paper: {
-    width: '70%',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: "10%",
-  },
-});
+// CSS is imported in order to implement media-queries for responsiveness
 
 class SimpleModal extends React.Component {
 
   render() {
-    const { classes } = this.props;
     const payorData = this.props.payorData;
     return (
         <Modal
@@ -31,15 +18,16 @@ class SimpleModal extends React.Component {
           open={this.props.open}
           onClose={this.props.onClose}
         >
-          <div className={classes.paper}>
+          <div className="modal">
             <Typography variant="title" align="center" gutterBottom>
-                {this.props.payeeName} REMITTANCES
+                {this.props.payeeName} INVOICES
             </Typography>
 
             <PanelHeader/>
             {/* maps through remittance array to populate expansion panels */}
             {payorData.map((data) => (
                 <ExpansionPanel
+                    key = {data.PayorId}
                     payor={data.PayorName}
                     id = {data.PayorId}
                     invoice = {data.InvoiceNo}
@@ -54,15 +42,13 @@ class SimpleModal extends React.Component {
   }
 }
 
-SimpleModal.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
+//Sets default prop values since setState can leave values 'undefined' while component updates in HOC.
 SimpleModal.defaultProps = {
+    open: false,
     payorData: []
   };
 
 // We need an intermediary variable for handling the recursive nesting.
-const SimpleModalWrapped = withStyles(styles)(SimpleModal);
+const SimpleModalWrapped = (SimpleModal);
 
 export default SimpleModalWrapped;

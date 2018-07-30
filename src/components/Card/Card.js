@@ -63,7 +63,7 @@ class Card extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const icon = this.props.icon;
+
     //Boolean to conditionally render alerts for when a credit card is expired
     const exp = () => {
       if (moment(this.props.subdate, "M-YYYY") > moment().add(1, "months")) {
@@ -72,41 +72,41 @@ class Card extends React.Component {
       else {
         return false
       }
-     }
+      };
 
     return (
       <div>
         <Paper className={classes.card}>
         <CardHeader 
-        avatar = {exp ? <AlertIcon/> : ""}
-        title={this.props.name}
-        subheader={this.props.subdate}             
-        action={
-              <Tooltip title = "View Remittances">
-                <IconButton onClick = {this.props.toggleModal}>
-                  <Details />
-                </IconButton>
-              </Tooltip>
-            }
-            />
+          avatar = {exp ? <AlertIcon/> : ""}
+          title={this.props.name}
+          subheader={this.props.subdate}             
+          action={
+                <Tooltip title = "View Remittances">
+                  <IconButton onClick = {this.props.toggleModal}>
+                    <Details />
+                  </IconButton>
+                </Tooltip>
+              }
+        />
         <CardContent>
           <Typography variant="body1">
             <Person className={classes.icon} color="primary"/> Contact: {this.props.contact}
           </Typography>
           <Typography variant="body1">
-          <Phone className={classes.icon} color="primary"/> Phone: {this.props.phone}
+            <Phone className={classes.icon} color="primary"/> Phone: {this.props.phone}
           </Typography>
           <Typography variant="body1">
-          <Scanner className={classes.icon} color="primary"/> Fax: {this.props.fax}
+            <Scanner className={classes.icon} color="primary"/> Fax: {this.props.fax}
           </Typography>
           <br/>
-          <Business className={classes.icon} color="default"/>
+          <Business className={classes.icon}/>
           <Typography variant="body1">
                 {this.props.address1}
-              </Typography>
-              <Typography variant="body1">
+          </Typography>
+          <Typography variant="body1">
                 {this.props.city}, {this.props.state} {this.props.zip} {this.props.country}
-              </Typography>
+          </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
             <Tooltip title = "View Payment Info">

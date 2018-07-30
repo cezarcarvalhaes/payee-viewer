@@ -6,30 +6,36 @@ import Card from './components/Card';
 import SimpleModal from './components/Modal';
 import Button from '@material-ui/core/Button';
 import SortByAlpha from '@material-ui/icons/SortByAlpha';
-import Icon from '@material-ui/core/Icon';
 import SearchBar from './components/SearchBar';
 import data from './sample.json';
 import moment from 'moment';
 import './App.css';
 
 const toolsStyle = {
-  float: 'right',
-  marginRight: '2em',
+  display: 'flex',
+  margin: '1em 2em',
+  justifyContent: 'space-between'
 }
 
 class App extends Component {
 
 state = {
+  //stores json data
   data,
+  //toggles modal
   open: false,
+  //stores payor data to pass into modal
   payorData: [],
+  //stores payee name for modal
   payeeName: "",
+  //toggles ascending/descending sort
   sort: false,
+  //stores search input
   search: "",
 };
 
-//sorts data once component mounts
 componentDidMount() {
+  //sorts data oncomponent mount
   this.toggleSort();
 };
 
@@ -55,6 +61,7 @@ toggleSort = () => {
 }
 
 populateModal = (index) => {
+  //setState is async, so callback function is used to wait until setState occurs before opening modal
   this.setState({payorData: data[index], payeeName:data[index].Payee.Name}, 
     () => this.handleOpen())
 }
@@ -67,7 +74,7 @@ handleOpen = () => {
 handleClose = () => {
   this.setState({ open: false });
 };
-
+//stores input in state
 handleInputChange = (event) => {
   const { name, value } = event.target;
   this.setState({
@@ -87,15 +94,17 @@ handleInputChange = (event) => {
           payeeName={this.state.payeeName}
         />
         <Header/>
-        <SearchBar onChange = {this.handleInputChange}/>
         <div id = "tools" style = {toolsStyle}>
-          <Button variant="fab" aria-label="Sort" align = "right" onClick={this.toggleSort}>
+        <SearchBar onChange = {this.handleInputChange}/>
+          <Button variant="fab" aria-label="Sort" align = "right" color = "primary" onClick={this.toggleSort}>
             <SortByAlpha />
           </Button>
         </div>
         <Grid container spacing={8} style={{padding: 8}}>
           {this.state.data
+          //filters as user inputs
           .filter( (data) => data.Payee.Name.startsWith(search))
+          //renders cards for each valid index
           .map( (data, index)=> (
              <Grid item xs={12} sm={6} lg={4} xl={3} key = {index}>
                 <Card 
