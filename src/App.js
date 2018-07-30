@@ -7,6 +7,7 @@ import SimpleModal from './components/Modal';
 import Button from '@material-ui/core/Button';
 import SortByAlpha from '@material-ui/icons/SortByAlpha';
 import SearchBar from './components/SearchBar';
+import Footer from './components/Footer';
 import data from './sample.json';
 import moment from 'moment';
 import './App.css';
@@ -128,6 +129,7 @@ handleInputChange = (event) => {
           )
           )}
         </Grid>
+        <Footer/>
       </div>
     );
   }

@@ -14,7 +14,7 @@ const styles = theme => ({
   },
 });
 
-function PanelHeader(props) {
+const PanelHeader = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
