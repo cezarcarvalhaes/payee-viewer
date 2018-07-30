@@ -1,4 +1,4 @@
-#Payee Viewer
+# Payee Viewer
 
 This web app was created as part of a technical test for Paymerang. The app displays payee and invoice data from that's supplied by a static JSON file. 
 
@@ -6,7 +6,7 @@ You can view the functioning app at https://cezarcarvalhaes.github.io/payee-view
 
 ---
 
-###Functionality
+### Functionality
 
 Payee Contact information is displayed in each card. An alert is displayed for payees with outdated credit card information.
 
@@ -20,11 +20,11 @@ To view ***invoices*** click the 'Details' button on the top right of the card. 
 
 ---
 
-###Dependencies
+### Dependencies
 * Create React App
 * React
 * Material UI
 
 ---
-*Developed by Cezar Carvalhaes in 2018.
+*Developed by Cezar Carvalhaes in 2018.*
 
