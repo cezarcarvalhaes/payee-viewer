@@ -9,6 +9,7 @@ import SortByAlpha from '@material-ui/icons/SortByAlpha';
 import Icon from '@material-ui/core/Icon';
 import SearchBar from './components/SearchBar';
 import data from './sample.json';
+import moment from 'moment';
 import './App.css';
 
 const toolsStyle = {
@@ -99,7 +100,7 @@ handleInputChange = (event) => {
              <Grid item xs={12} sm={6} lg={4} xl={3} key = {index}>
                 <Card 
                   name = {data.Payee.Name} 
-                  subdate = {data.Payee.SubmissionDate}
+                  subdate = {moment(data.Payee.SubmissionDate).format("dddd, MMMM Do YYYY")}
                   contact = {data.Payee.Attention} 
                   phone = {data.Payee.Phone}
                   fax = {data.Payee.Fax}

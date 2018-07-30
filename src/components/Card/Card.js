@@ -4,8 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { CardHeader, CardContent, CardActions, Collapse, IconButton, Typography, Paper } from '@material-ui/core/';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Details from '@material-ui/icons/Details';
 import Tooltip from '@material-ui/core/Tooltip';
+import AlertIcon from '../AlertIcon/AlertIcon';
+import Person from '@material-ui/icons/Person';
+import Phone from '@material-ui/icons/Phone';
+import Scanner from '@material-ui/icons/Scanner';
+import Business from '@material-ui/icons/Business';
+import moment from 'moment';
 
 const styles = theme => ({
   card: {
@@ -31,6 +37,13 @@ const styles = theme => ({
   primaryText: {
     color: '#444444',
   },
+  danger: {
+    color: 'red',
+    fontWeight: 'bold'
+  },
+  icon: {
+    verticalAlign: 'middle',
+  }
 });
 
 class Card extends React.Component {
@@ -51,32 +64,43 @@ class Card extends React.Component {
   render() {
     const { classes } = this.props;
     const icon = this.props.icon;
+    //Boolean to conditionally render alerts for when a credit card is expired
+    const exp = () => {
+      if (moment(this.props.subdate, "M-YYYY") > moment().add(1, "months")) {
+        return true
+      }
+      else {
+        return false
+      }
+     }
 
     return (
       <div>
         <Paper className={classes.card}>
         <CardHeader 
-        title={this.props.name} 
+        avatar = {exp ? <AlertIcon/> : ""}
+        title={this.props.name}
         subheader={this.props.subdate}             
         action={
               <Tooltip title = "View Remittances">
                 <IconButton onClick = {this.props.toggleModal}>
-                  <MoreVertIcon />
+                  <Details />
                 </IconButton>
               </Tooltip>
             }
             />
         <CardContent>
           <Typography variant="body1">
-            Contact: {this.props.contact}
+            <Person className={classes.icon} color="primary"/> Contact: {this.props.contact}
           </Typography>
           <Typography variant="body1">
-            Phone: {this.props.phone}
+          <Phone className={classes.icon} color="primary"/> Phone: {this.props.phone}
           </Typography>
           <Typography variant="body1">
-            Fax: {this.props.fax}
+          <Scanner className={classes.icon} color="primary"/> Fax: {this.props.fax}
           </Typography>
-          <br></br>
+          <br/>
+          <Business className={classes.icon} color="default"/>
           <Typography variant="body1">
                 {this.props.address1}
               </Typography>
@@ -107,7 +131,10 @@ class Card extends React.Component {
                 Card Number: {this.props.PAN}
               </Typography>
               <Typography variant = "body1">
-                CVV: {this.props.CVV} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Exp. {this.props.exp}
+                CVV: {this.props.CVV} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+                <span className={exp ? classes.danger : null}>
+                  Exp. {this.props.exp}
+                </span>
               </Typography>
             </CardContent>
           </Collapse>
