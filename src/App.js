@@ -7,6 +7,7 @@ import SimpleModal from './components/Modal';
 import Button from '@material-ui/core/Button';
 import SortByAlpha from '@material-ui/icons/SortByAlpha';
 import Icon from '@material-ui/core/Icon';
+import SearchBar from './components/SearchBar';
 import data from './sample.json';
 import './App.css';
 
@@ -23,6 +24,7 @@ state = {
   payorData: [],
   payeeName: "",
   sort: false,
+  search: "",
 };
 
 //sorts data once component mounts
@@ -65,7 +67,15 @@ handleClose = () => {
   this.setState({ open: false });
 };
 
+handleInputChange = (event) => {
+  const { name, value } = event.target;
+  this.setState({
+    [name]: value.trim().toUpperCase()
+  });
+}
+
   render() {
+    const search = this.state.search;
     return (
       <div>
         <CssBaseline/>
@@ -76,13 +86,16 @@ handleClose = () => {
           payeeName={this.state.payeeName}
         />
         <Header/>
+        <SearchBar onChange = {this.handleInputChange}/>
         <div id = "tools" style = {toolsStyle}>
           <Button variant="fab" aria-label="Sort" align = "right" onClick={this.toggleSort}>
             <SortByAlpha />
           </Button>
         </div>
         <Grid container spacing={8} style={{padding: 8}}>
-          {this.state.data.map( (data, index)=> (
+          {this.state.data
+          .filter( (data) => data.Payee.Name.startsWith(search))
+          .map( (data, index)=> (
              <Grid item xs={12} sm={6} lg={4} xl={3} key = {index}>
                 <Card 
                   name = {data.Payee.Name} 
