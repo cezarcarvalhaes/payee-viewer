@@ -4,21 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { CardHeader, CardContent, CardActions, Collapse, IconButton, Typography, Paper } from '@material-ui/core/';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   card: {
-    // width: '218px',
     margin: '5px',
     backgroundSize: 'unset',
-    // backgroundColor: '#424242',
     paddingTop: '8px',
     borderRadius:5,
-  },
-  media: {
-    width: '200px',
-    // paddingTop: '100%',
-    backgroundSize: 'unset',
-    marginLeft: '8px',
   },
   actions: {
     display: 'flex',
@@ -37,14 +31,6 @@ const styles = theme => ({
   primaryText: {
     color: '#444444',
   },
-  header: {
-    marginBottom: '0px',
-    marginTop: '8px',
-  },
-  streaming: {
-    color: "#f2f2f2",
-    textAlign: 'center'
-  }
 });
 
 class Card extends React.Component {
@@ -69,7 +55,17 @@ class Card extends React.Component {
     return (
       <div>
         <Paper className={classes.card}>
-        <CardHeader title={this.props.name} subheader={this.props.subdate} />
+        <CardHeader 
+        title={this.props.name} 
+        subheader={this.props.subdate}             
+        action={
+              <Tooltip title = "View Remittances">
+                <IconButton onClick = {this.props.toggleModal}>
+                  <MoreVertIcon />
+                </IconButton>
+              </Tooltip>
+            }
+            />
         <CardContent>
           <Typography variant="body1">
             Contact: {this.props.contact}
@@ -81,24 +77,26 @@ class Card extends React.Component {
             Fax: {this.props.fax}
           </Typography>
           <br></br>
-          <Typography variant="body1" className={classes.primaryText}>
+          <Typography variant="body1">
                 {this.props.address1}
               </Typography>
-              <Typography variant="body1" className={classes.primaryText}>
+              <Typography variant="body1">
                 {this.props.city}, {this.props.state} {this.props.zip} {this.props.country}
               </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton> 
+            <Tooltip title = "View Payment Info">
+              <IconButton
+                className={classnames(classes.expand, {
+                  [classes.expandOpen]: this.state.expanded,
+                })}
+                onClick={this.handleExpandClick}
+                aria-expanded={this.state.expanded}
+                aria-label="Show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton> 
+            </Tooltip>
         </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
@@ -106,10 +104,10 @@ class Card extends React.Component {
                 Payment info:
               </Typography>
               <Typography variant = "body1">
-                Card: {this.props.PAN}
+                Card Number: {this.props.PAN}
               </Typography>
               <Typography variant = "body1">
-                CVV: {this.props.CVV} &nbsp;&nbsp;|&nbsp;&nbsp; Exp. {this.props.exp}
+                CVV: {this.props.CVV} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Exp. {this.props.exp}
               </Typography>
             </CardContent>
           </Collapse>

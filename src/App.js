@@ -3,23 +3,46 @@ import Header from './components/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Card from './components/Card';
+import SimpleModal from './components/Modal';
 import data from './sample.json';
 import './App.css';
 
 class App extends Component {
 
 state = {
-  data
+  data,
+  open: false,
+  payorData: [],
+  payeeName: "",
+};
+
+handleOpen = () => {
+  this.setState({ open: true });
+};
+
+populateModal = (index) => {
+  this.setState({payorData: data[index], payeeName:data[index].Payee.Name}, 
+    () => this.handleOpen())
+}
+
+handleClose = () => {
+  this.setState({ open: false });
 };
 
   render() {
     return (
       <div>
         <CssBaseline/>
+        <SimpleModal 
+        open={this.state.open} 
+        onClose={this.handleClose} 
+        payorData={this.state.payorData.Remittance}
+        payeeName={this.state.payeeName}
+        />
         <Header/>
         <Grid container spacing={8} style={{padding: 8}}>
-          {this.state.data.map( (data)=> (
-             <Grid item xs={12} sm={6} lg={4} xl={3}>
+          {this.state.data.map( (data, index)=> (
+             <Grid item xs={12} sm={6} lg={4} xl={3} key = {index}>
                 <Card 
                 name = {data.Payee.Name} 
                 subdate = {data.Payee.SubmissionDate}
@@ -35,6 +58,7 @@ state = {
                 PAN = {data.Payment.PAN}
                 CVV = {data.Payment.CVV}
                 exp = {data.Payment.Exp}
+                toggleModal = {()=>this.populateModal(index)}
                 />
              </Grid>
           )
